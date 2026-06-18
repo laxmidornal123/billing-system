@@ -1,0 +1,146 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="row">
+
+<div class="col-md-3">
+
+<div class="card bg-primary text-white shadow">
+
+<div class="card-body">
+
+<h5>Total Products</h5>
+
+<h2>{{ total_products }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-success text-white shadow">
+
+<div class="card-body">
+
+<h5>Total Customers</h5>
+
+<h2>{{ total_customers }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-warning text-white shadow">
+
+<div class="card-body">
+
+<h5>Total Invoices</h5>
+
+<h2>{{ total_invoices }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-md-3">
+
+<div class="card bg-danger text-white shadow">
+
+<div class="card-body">
+
+<h5>Total Sales</h5>
+
+<h2>₹{{ total_sales }}</h2>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-primary text-white">
+
+        <h5>Sales Analytics</h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <canvas id="salesChart" height="120"></canvas>
+
+    </div>
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+const ctx = document.getElementById('salesChart');
+
+new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: ['Laptop', 'Speaker', 'External Hard Disk', 'Monitor'],
+        datasets: [{
+            label: 'Quantity Sold',
+            data: [1, 1, 1, 2]
+        }]
+    }
+});
+
+</script>
+<div class="card shadow mt-4">
+
+    <div class="card-header bg-info text-white">
+
+        <h5>Recent Activity</h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <ul class="list-group">
+
+            {% for invoice in recent_invoices %}
+
+            <li class="list-group-item">
+
+                Invoice
+
+                <strong>{{ invoice.invoice_no }}</strong>
+
+                created for
+
+                <strong>{{ invoice.customer.name }}</strong>
+
+            </li>
+
+            {% empty %}
+
+            <li class="list-group-item">
+
+                No activity found.
+
+            </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+</div>
+{% endblock %}

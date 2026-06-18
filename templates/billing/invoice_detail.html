@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow">
+
+    <div class="card-header bg-primary text-white">
+
+        <h4>Invoice Details</h4>
+
+    </div>
+
+    <div class="card-body">
+
+        <p>
+            <strong>Invoice No:</strong>
+            {{ invoice.invoice_no }}
+        </p>
+
+        <p>
+            <strong>Customer:</strong>
+            {{ invoice.customer.name }}
+        </p>
+
+        <p>
+            <strong>Date:</strong>
+            {{ invoice.created_at }}
+        </p>
+
+        <table class="table table-bordered">
+
+            <thead>
+
+                <tr>
+
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in items %}
+
+                <tr>
+
+                    <td>{{ item.product.name }}</td>
+
+                    <td>{{ item.quantity }}</td>
+
+                    <td>₹{{ item.price }}</td>
+
+                    <td>₹{{ item.total }}</td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        <h5>
+            Subtotal: ₹{{ invoice.subtotal }}
+        </h5>
+
+        <h5>
+            GST: ₹{{ invoice.gst }}
+        </h5>
+
+        <h4>
+            Total: ₹{{ invoice.total }}
+        </h4>
+
+        <a
+            href="{% url 'download_invoice' invoice.id %}"
+            class="btn btn-success">
+
+            Download PDF
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
